@@ -1,7 +1,6 @@
 stages:
   - build
   - test
-  - sonarqube
 
 image: alvrme/alpine-android:android-34-jdk17
 
@@ -15,6 +14,9 @@ cache:
     - app/lint/reports/
     - app/build/
     - ./build.gradle.kts
+
+before_script:
+  - chmod +x ./gradlew
 
 lintDebug:
   stage: build
@@ -50,21 +52,6 @@ debugTests:
     when: always
     paths:
       - app/build/reports/tests/
-  only:
-    - main
-    - merge_requests
-  tags:
-    - hva
-
-sonarqube-check:
-  stage: sonarqube
-  variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
-    GIT_DEPTH: "0"
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  script:
-    - ./gradlew --build-cache sonar
-  allow_failure: true
   only:
     - main
     - merge_requests
