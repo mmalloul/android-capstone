@@ -1,0 +1,72 @@
+stages:
+  - build
+  - test
+  - sonarqube
+
+image: alvrme/alpine-android:android-34-jdk17
+
+variables:
+  GRADLE_USER_HOME: "${CI_PROJECT_DIR}/.gradle"
+
+cache:
+  key: "${CI_COMMIT_REF_SLUG}"
+  paths:
+    - .gradle/
+    - app/lint/reports/
+    - app/build/
+    - ./build.gradle.kts
+
+lintDebug:
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintDebug
+  artifacts:
+    paths:
+      - app/build/lint/reports/lint-results-debug.xml
+  only:
+    - main
+    - merge_requests
+  tags:
+    - hva
+
+assembleDebug:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs
+  only:
+    - main
+    - merge_requests
+  tags:
+    - hva
+
+debugTests:
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
+  artifacts:
+    when: always
+    paths:
+      - app/build/reports/tests/
+  only:
+    - main
+    - merge_requests
+  tags:
+    - hva
+
+sonarqube-check:
+  stage: sonarqube
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  script:
+    - ./gradlew --build-cache sonar
+  allow_failure: true
+  only:
+    - main
+    - merge_requests
+  tags:
+    - hva

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Capstone</string>
+
+    <string name="error_icon">Error</string>
+    <string name="error_message">Something went wrong. Please try again later.</string>
+    <string name="go_back_btn">Go back</string>
+</resources>
