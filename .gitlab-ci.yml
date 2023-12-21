@@ -1,11 +1,13 @@
 stages:
+  - lint
   - build
   - test
 
-image: alvrme/alpine-android:android-34-jdk17
-
+# Global variables and cache
 variables:
   GRADLE_USER_HOME: "${CI_PROJECT_DIR}/.gradle"
+  BACKEND_IMAGE_NAME: backend
+  ANDROID_IMAGE_NAME: android
 
 cache:
   key: "${CI_COMMIT_REF_SLUG}"
@@ -13,13 +15,16 @@ cache:
     - .gradle/
     - app/lint/reports/
     - app/build/
+    - backend/node_modules/
     - ./build.gradle.kts
 
 before_script:
   - chmod +x ./gradlew
 
-lintDebug:
-  stage: build
+# Android-specific jobs
+lintAndroidDebug:
+  stage: lint
+  image: alvrme/alpine-android:android-34-jdk17
   script:
     - ./gradlew -Pci --console=plain :app:lintDebug
   artifacts:
@@ -31,8 +36,9 @@ lintDebug:
   tags:
     - hva
 
-assembleDebug:
+assembleAndroidDebug:
   stage: build
+  image: alvrme/alpine-android:android-34-jdk17
   script:
     - ./gradlew assembleDebug
   artifacts:
@@ -44,8 +50,9 @@ assembleDebug:
   tags:
     - hva
 
-debugTests:
+testAndroidDebug:
   stage: test
+  image: alvrme/alpine-android:android-34-jdk17
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
   artifacts:
@@ -55,5 +62,24 @@ debugTests:
   only:
     - main
     - merge_requests
+  tags:
+    - hva
+
+# Backend-specific jobs
+lintBackend:
+  stage: lint
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - echo "Linting backend code..."
+    - docker build --target=lint -t ${BACKEND_IMAGE_NAME}-lint .
+    - echo "No lint issues found in backend."
+  only:
+    refs:
+      - main
+      - merge_requests
+    changes:
+      - backend/**/*
   tags:
     - hva
