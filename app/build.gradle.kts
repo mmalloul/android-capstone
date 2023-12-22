@@ -70,16 +70,17 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.compose.material:material:1.5.4")
-    implementation ("com.google.zxing:core:3.4.1")
-    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("androidx.compose.material3:material3:1.2.0-beta01")
+    implementation("com.google.zxing:core:3.4.1")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     // Network
-    implementation ("com.squareup.retrofit2:retrofit:2.8.1")
-    implementation ("com.squareup.retrofit2:converter-gson:2.8.1")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.4.0")
+    implementation("com.squareup.retrofit2:retrofit:2.8.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.8.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.4.0")
 
-    implementation ("androidx.compose.runtime:runtime-livedata:1.6.0-beta03")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0-beta03")
 
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

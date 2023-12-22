@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.NavigationBar
@@ -24,15 +25,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import mohammed.capstone.ui.screens.AboutScreen
 import mohammed.capstone.ui.screens.ErrorScreen
 
 import mohammed.capstone.ui.screens.HomeScreen
-import mohammed.capstone.ui.screens.ProjectsScreen
+import mohammed.capstone.ui.screens.ProjectDetailScreen
+import mohammed.capstone.ui.screens.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.ui.theme.CapstoneTheme
 import mohammed.capstone.viewmodel.ViewModel
@@ -70,6 +74,7 @@ fun CapstoneApp() {
         }
     ) { innerPadding ->
         CapstoneNavHost(
+            viewModel = viewModel,
             navController = navController,
             modifier = Modifier.padding(innerPadding),
         )
@@ -119,17 +124,31 @@ fun BottomNav(navController: NavHostController) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CapstoneNavHost(navController: NavHostController, modifier: Modifier) {
+fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
-        composable(Screen.Home.route) { HomeScreen(navController ) }
-        composable(Screen.Projects.route) { ProjectsScreen(navController ) }
+        composable(Screen.Home.route) { HomeScreen(navController) }
+        composable(Screen.Projects.route) { ProjectListScreen(viewModel, navController ) }
         composable(Screen.About.route) { AboutScreen(navController ) }
-        composable(Screen.Error.route) { ErrorScreen(navController ) }
+        composable(
+            route = Screen.Error.route,
+            arguments = listOf(navArgument("errorMessage") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val errorMessage = backStackEntry.arguments?.getString("errorMessage") ?: "Unknown error"
+            ErrorScreen(navController, errorMessage)
+        }
+        composable(
+            route = Screen.ProjectDetail.route,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val projectId = backStackEntry.arguments?.getString("projectId") ?: return@composable
+            ProjectDetailScreen(viewModel, navController, projectId)
+        }
     }
 }
