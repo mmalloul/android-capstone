@@ -6,6 +6,7 @@ import refresh from "./refresh.js";
 import logout from "./logout.js";
 import users from "./users.js";
 import projects from "./projects.js";
+import swagger from "./swagger.js";
 const router = express.Router();
 
 export default (): express.Router => {
@@ -18,5 +19,6 @@ export default (): express.Router => {
 
   projects(router);
 
+  swagger(router);
   return router;
 };

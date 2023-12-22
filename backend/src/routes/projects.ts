@@ -7,7 +7,7 @@ import {
   createNewProject,
   updateProject,
   deleteProject,
-} from "../controllers/ProjectController.js"; // Update the import path as necessary
+} from "../controllers/ProjectController.js";
 import { verifyJWT } from "../middlewares/index.js";
 
 export default (router: express.Router): express.Router => {
@@ -18,6 +18,5 @@ export default (router: express.Router): express.Router => {
   router.post("/projects", verifyJWT, createNewProject);
   router.put("/projects/:id", verifyJWT, updateProject);
   router.delete("/projects/:id", verifyJWT, deleteProject);
-
   return router;
 };

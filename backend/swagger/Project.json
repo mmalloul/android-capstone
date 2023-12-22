@@ -1,0 +1,44 @@
+{
+  "Project": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int32",
+        "example": 1
+      },
+      "author_id": {
+        "type": "integer",
+        "format": "int32",
+        "example": 100
+      },
+      "title": {
+        "type": "string",
+        "example": "Project Management Tool"
+      },
+      "description": {
+        "type": "string",
+        "example": "A web-based project management application."
+      },
+      "repository_url": {
+        "type": "string",
+        "nullable": true,
+        "example": "https://github.com/example/project"
+      },
+      "url": {
+        "type": "string",
+        "nullable": true,
+        "example": "https://project.example.com"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": ["id", "author_id", "title", "description"]
+  }
+}
