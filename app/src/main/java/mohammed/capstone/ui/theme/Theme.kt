@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun CapstoneTheme(
-    darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
