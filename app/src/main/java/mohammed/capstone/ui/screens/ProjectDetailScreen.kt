@@ -56,7 +56,7 @@ fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, proj
 
     Scaffold(
         topBar = { ProjectDetailTopBar(navController) },
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         content = { paddingValues ->
             when (val project = projectResource.value) {
                 is Resource.Loading -> {
