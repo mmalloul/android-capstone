@@ -22,7 +22,6 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     init {
         getAllProjects()
     }
-
     fun getAllProjects() {
         viewModelScope.launch {
             _listOfProjects.value = Resource.Loading()
