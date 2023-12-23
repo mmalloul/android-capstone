@@ -8,13 +8,15 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    object Home : Screen("home", "Home", Icons.Filled.Home)
-    object About : Screen("about", "About", Icons.Filled.Person)
-    object Projects : Screen("projects", "Projects", Icons.Filled.Build)
-    object Error : Screen("error/{errorMessage}", "Error", Icons.Filled.Warning) {
+    data object Home : Screen("home", "Home", Icons.Filled.Home)
+    data object About : Screen("about", "About", Icons.Filled.Person)
+    data object Projects : Screen("projects", "Projects", Icons.Filled.Build)
+    data object Error : Screen("error/{errorMessage}", "Error", Icons.Filled.Warning) {
         fun createRoute(errorMessage: String) = "error/$errorMessage"
     }
-    object ProjectDetail : Screen("projectDetail/{projectId}", "Project Detail", Icons.Filled.Warning) {
+
+    data object ProjectDetail :
+        Screen("projectDetail/{projectId}", "Project Detail", Icons.Filled.Warning) {
         fun createRoute(projectId: String) = "projectDetail/$projectId"
     }
 }

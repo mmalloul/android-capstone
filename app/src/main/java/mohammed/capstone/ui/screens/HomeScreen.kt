@@ -41,7 +41,7 @@ import mohammed.capstone.ui.theme.CapstoneTheme
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val focusManager = LocalFocusManager.current
-    val state = rememberPullToRefreshState() { true }
+    val state = rememberPullToRefreshState { true }
 
     if (state.isRefreshing) {
         LaunchedEffect(true) {
@@ -95,7 +95,6 @@ fun HomeScreen(navController: NavHostController) {
     }
 }
 
-
 @Composable
 private fun IntroductionSection() {
     Column(
@@ -130,13 +129,13 @@ private fun FeaturedProjectsSection(navController: NavHostController) {
         FeaturedProjectCard(
             title = "Project 1",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            onClick = { navController.navigate("project1") }
+            onClick = { navController.navigate(Screen.ProjectDetail.createRoute("1")) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         FeaturedProjectCard(
             title = "Project 2",
             description = "Suspendisse non dui eget arcu hendrerit posuere.",
-            onClick = { navController.navigate("project2") }
+            onClick = { navController.navigate(Screen.ProjectDetail.createRoute("2")) }
         )
     }
 }
@@ -233,7 +232,7 @@ fun FeaturedProjectCard(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    CapstoneTheme(darkTheme = true) {
+    CapstoneTheme {
         HomeScreen(navController = rememberNavController())
     }
 }

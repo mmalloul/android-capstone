@@ -4,7 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,8 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import mohammed.capstone.R
 import mohammed.capstone.ui.theme.CapstoneTheme
 
@@ -27,7 +25,7 @@ data class AboutMeInfo(
 )
 
 @Composable
-fun AboutScreen(navController: NavHostController) {
+fun AboutScreen() {
     val aboutMeInfo = AboutMeInfo(
         name = "John Doe",
         occupation = "Software Engineer",
@@ -35,7 +33,7 @@ fun AboutScreen(navController: NavHostController) {
         profileImageRes = R.drawable.ic_launcher_foreground
     )
 
-    CapstoneTheme(darkTheme = true) {
+    CapstoneTheme {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp)
@@ -93,7 +91,7 @@ fun ProfileCard(aboutMeInfo: AboutMeInfo) {
 @Preview(showBackground = true)
 @Composable
 fun AboutScreenPreview() {
-    CapstoneTheme(darkTheme = true) {
-        AboutScreen(navController = rememberNavController())
+    CapstoneTheme {
+        AboutScreen()
     }
 }

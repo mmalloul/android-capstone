@@ -57,7 +57,7 @@ fun ErrorScreen(
             )
         }
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = { navController.navigate(Screen.Home.route) },
             modifier = Modifier.align(Alignment.CenterHorizontally),
             colors = ButtonDefaults.buttonColors(containerColor = ErrorColor),
         ) {

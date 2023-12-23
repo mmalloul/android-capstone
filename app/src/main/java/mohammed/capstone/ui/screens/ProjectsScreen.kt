@@ -61,19 +61,22 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
                 is Resource.Loading -> {
                     CircularProgressIndicator()
                 }
+
                 is Resource.Success -> {
                     LazyColumn {
                         if (!pullRefreshState.isRefreshing) {
                             items(projects.data!!) { project ->
-                                ProjectListItem(project, navController, viewModel = viewModel)
+                                ProjectListItem(project, navController)
                             }
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     Log.d("Project List Screen", "${projects.message}")
                     navController.navigate(Screen.Error.createRoute("${projects.message}"))
                 }
+
                 else -> {
                     navController.navigate(Screen.Error.createRoute("Unknown Error"))
                 }
@@ -88,16 +91,16 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
 }
 
 @Composable
-fun ProjectListItem(project: Project, navController: NavHostController, viewModel: ViewModel) {
+fun ProjectListItem(project: Project, navController: NavHostController) {
+
     val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                viewModel.getProject(project.id)
                 navController.navigate(Screen.ProjectDetail.createRoute(project.id))
-                       },
+            },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
@@ -150,7 +153,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
 @Preview(showBackground = true)
 @Composable
 fun ProjectListScreenPreview() {
-    CapstoneTheme(darkTheme = true) {
+    CapstoneTheme {
         ProjectListScreen(viewModel = viewModel(), navController = rememberNavController())
     }
 }
