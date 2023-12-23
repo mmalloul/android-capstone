@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -33,7 +32,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import mohammed.capstone.ui.screens.AboutScreen
 import mohammed.capstone.ui.screens.ErrorScreen
-
 import mohammed.capstone.ui.screens.HomeScreen
 import mohammed.capstone.ui.screens.ProjectDetailScreen
 import mohammed.capstone.ui.screens.ProjectListScreen
@@ -60,7 +58,6 @@ class MainActivity : ComponentActivity() {
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CapstoneApp() {
     val viewModel: ViewModel = viewModel()
@@ -92,7 +89,7 @@ fun GreetingPreview() {
 
 @Composable
 fun BottomNav(navController: NavHostController) {
-    val screens = listOf(Screen.Home, Screen.Projects, Screen.About, Screen.Error)
+    val screens = listOf(Screen.Projects, Screen.Home, Screen.About)
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surfaceVariant,
