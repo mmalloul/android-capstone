@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -44,7 +44,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CapstoneTheme {
+            val systemIsInDarkTheme = isSystemInDarkTheme()
+
+            CapstoneTheme(darkTheme = systemIsInDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
@@ -56,7 +58,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CapstoneApp() {
@@ -64,7 +65,7 @@ fun CapstoneApp() {
     val navController = rememberNavController()
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
             BottomNav(navController = navController)
@@ -121,7 +122,6 @@ fun BottomNav(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modifier: Modifier) {
