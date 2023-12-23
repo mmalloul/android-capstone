@@ -33,7 +33,6 @@ import androidx.navigation.navArgument
 import mohammed.capstone.ui.screens.AboutScreen
 import mohammed.capstone.ui.screens.ErrorScreen
 import mohammed.capstone.ui.screens.HomeScreen
-import mohammed.capstone.ui.screens.ProjectDetailScreen
 import mohammed.capstone.ui.screens.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.ui.theme.CapstoneTheme
@@ -145,7 +144,7 @@ fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modi
             arguments = listOf(navArgument("projectId") { type = NavType.StringType })
         ) { backStackEntry ->
             val projectId = backStackEntry.arguments?.getString("projectId") ?: return@composable
-            ProjectDetailScreen(viewModel, navController, projectId)
+//            ProjectDetailScreen(viewModel, navController, projectId)
         }
     }
 }
