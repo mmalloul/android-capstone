@@ -22,7 +22,8 @@ import mohammed.capstone.R
 
 @Composable
 fun ErrorScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    errorMessage: String
 ) {
     Column(
         modifier = Modifier
@@ -49,6 +50,11 @@ fun ErrorScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
+            Text(
+                text = errorMessage,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center
+            )
         }
         Button(
             onClick = { navController.popBackStack() },
@@ -64,6 +70,6 @@ fun ErrorScreen(
 @Preview(showBackground = true)
 fun ErrorScreenPreview() {
     CapstoneTheme {
-        HomeScreen(navController = rememberNavController())
+        ErrorScreen(navController = rememberNavController(), errorMessage = "error")
     }
 }

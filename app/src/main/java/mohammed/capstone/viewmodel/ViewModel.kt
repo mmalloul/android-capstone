@@ -10,19 +10,30 @@ import mohammed.capstone.data.api.util.Resource
 import mohammed.capstone.data.models.Project
 import mohammed.capstone.repository.Repository
 
-class ViewModel(application: Application): AndroidViewModel(application) {
+class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = Repository()
 
-    val getProjectResource: LiveData<Resource<Project>>
-        get() = _apiHealthResource
+    private val _listOfProjects: MutableLiveData<Resource<List<Project>>> = MutableLiveData()
+    val getAllProjectsResource: LiveData<Resource<List<Project>>> = _listOfProjects
 
-    private val _apiHealthResource: MutableLiveData<Resource<Project>> = MutableLiveData(Resource.Empty())
+    private val _project: MutableLiveData<Resource<Project>> = MutableLiveData()
+    val getProjectResource: LiveData<Resource<Project>> = _project
 
-    fun getProject() {
-        _apiHealthResource.value = Resource.Loading()
+    init {
+        getAllProjects()
+    }
 
+    fun getAllProjects() {
         viewModelScope.launch {
-            _apiHealthResource.value = repository.getProject()
+            _listOfProjects.value = Resource.Loading()
+            _listOfProjects.value = repository.getAllProject()
+        }
+    }
+
+    fun getProject(id: String) {
+        viewModelScope.launch {
+            _project.value = Resource.Loading()
+            _project.value = repository.getProject(id)
         }
     }
 }

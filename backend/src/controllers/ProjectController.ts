@@ -16,7 +16,7 @@ export const getAllProjects = async (
 ) => {
   try {
     const projects = await findAllProjects();
-    res.status(200).json({ projects });
+    res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,7 +35,7 @@ export const getProject = async (
       return res.status(404).json({ error: "Project not found" });
     }
 
-    res.status(200).json({ project });
+    res.status(200).json(project);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

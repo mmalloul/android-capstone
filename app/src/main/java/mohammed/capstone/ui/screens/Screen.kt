@@ -11,5 +11,10 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object Home : Screen("home", "Home", Icons.Filled.Home)
     object About : Screen("about", "About", Icons.Filled.Person)
     object Projects : Screen("projects", "Projects", Icons.Filled.Build)
-    object Error : Screen("error", "Error", Icons.Filled.Warning)
+    object Error : Screen("error/{errorMessage}", "Error", Icons.Filled.Warning) {
+        fun createRoute(errorMessage: String) = "error/$errorMessage"
+    }
+    object ProjectDetail : Screen("projectDetail/{projectId}", "Project Detail", Icons.Filled.Warning) {
+        fun createRoute(projectId: String) = "projectDetail/$projectId"
+    }
 }

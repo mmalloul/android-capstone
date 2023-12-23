@@ -11,9 +11,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.viewmodel.ViewModel
 
 @Composable
-fun ProjectsScreen(navController: NavHostController) {
+fun ProjectListScreen(navController: NavHostController, viewModel: ViewModel) {
     CapstoneTheme(darkTheme = true) {
 
         Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
