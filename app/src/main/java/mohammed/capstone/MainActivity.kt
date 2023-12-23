@@ -130,7 +130,7 @@ fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modi
         modifier = modifier
     ) {
         composable(Screen.Home.route) { HomeScreen(navController) }
-        composable(Screen.Projects.route) { ProjectListScreen(navController, viewModel) }
+        composable(Screen.Projects.route) { ProjectListScreen(viewModel, navController) }
         composable(Screen.About.route) { AboutScreen(navController ) }
         composable(
             route = Screen.Error.route,
