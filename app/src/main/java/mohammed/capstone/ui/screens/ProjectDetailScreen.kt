@@ -12,8 +12,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,22 +36,20 @@ import mohammed.capstone.viewmodel.ViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, projectId: String) {
-    LaunchedEffect(projectId) {
-        viewModel.getProject(projectId)
-    }
+    viewModel.getProject(projectId)
+
 
     val context = LocalContext.current
     val state = rememberPullToRefreshState()
 
     if (state.isRefreshing) {
         LaunchedEffect(true) {
+            viewModel.getProject(projectId)
             delay(1500)
-            // TODO: Refresh state
             state.endRefresh()
         }
     }
 
-    // Observe project details LiveData
     val projectResource = viewModel.getProjectResource.observeAsState()
 
     Scaffold(
@@ -89,7 +87,7 @@ fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, proj
                 }
 
                 else -> {
-                    navController.navigate(Screen.Error.createRoute("Unknown Error"))
+                    navController.navigate(Screen.Error.createRoute(stringResource(id = R.string.unknown_error)))
                 }
             }
         }
@@ -99,10 +97,14 @@ fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, proj
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectDetailTopBar(navController: NavController) {
-    TopAppBar(title = { Text("Project Details") },
+    TopAppBar(
+        title = { Text(stringResource(id = R.string.project_detail_title)) },
         navigationIcon = {
             IconButton(onClick = { navController.navigateUp() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back_btn)
+                )
             }
         }
     )
@@ -118,7 +120,7 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
         item {
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Project Image",
+                contentDescription = stringResource(id = R.string.project_image_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -140,7 +142,10 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
-                Text("Visit Project", color = MaterialTheme.colorScheme.onPrimary)
+                Text(
+                    stringResource(id = R.string.visit_project_btn),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
@@ -148,7 +153,10 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)
             ) {
-                Text("View Repository", color = MaterialTheme.colorScheme.onTertiary)
+                Text(
+                    stringResource(id = R.string.view_repository_btn),
+                    color = MaterialTheme.colorScheme.onTertiary
+                )
             }
         }
     }

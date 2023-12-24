@@ -2,7 +2,6 @@ package mohammed.capstone.ui.screens
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,8 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,13 +36,17 @@ import mohammed.capstone.viewmodel.ViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
+    LaunchedEffect(Unit) {
+        viewModel.getAllProjects()
+    }
+
     val projectsResource = viewModel.getAllProjectsResource.observeAsState()
     val pullRefreshState = rememberPullToRefreshState()
 
     if (pullRefreshState.isRefreshing) {
         LaunchedEffect(Unit) {
-            delay(500)
             viewModel.getAllProjects()
+            delay(1500)
             pullRefreshState.endRefresh()
         }
     }
@@ -54,7 +57,10 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
             .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         Column(modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 0.dp)) {
-            Text("Project List", style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(id = R.string.project_list_title),
+                style = MaterialTheme.typography.titleLarge
+            )
             Spacer(modifier = Modifier.height(16.dp))
 
             when (val projects = projectsResource.value) {
@@ -73,12 +79,11 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
                 }
 
                 is Resource.Error -> {
-                    Log.d("Project List Screen", "${projects.message}")
                     navController.navigate(Screen.Error.createRoute("${projects.message}"))
                 }
 
                 else -> {
-                    navController.navigate(Screen.Error.createRoute("Unknown Error"))
+                    navController.navigate(Screen.Error.createRoute(stringResource(id = R.string.unknown_error)))
                 }
             }
         }
@@ -92,7 +97,6 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
 
 @Composable
 fun ProjectListItem(project: Project, navController: NavHostController) {
-
     val context = LocalContext.current
 
     Card(
@@ -132,7 +136,7 @@ fun ProjectListItem(project: Project, navController: NavHostController) {
                         context.startActivity(intent)
                     }
                 }) {
-                    Text("Project URL")
+                    Text(stringResource(id = R.string.project_url_btn))
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 TextButton(onClick = {
@@ -142,7 +146,7 @@ fun ProjectListItem(project: Project, navController: NavHostController) {
                         context.startActivity(intent)
                     }
                 }) {
-                    Text("Repository URL")
+                    Text(stringResource(id = R.string.repository_url_btn))
                 }
             }
         }

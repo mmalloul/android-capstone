@@ -1,7 +1,46 @@
 <resources>
     <string name="app_name">Capstone</string>
 
+    <!-- Error Screen -->
     <string name="error_icon">Error</string>
     <string name="error_message">Something went wrong. Please try again later.</string>
+    <string name="unknown_error">Unknown error</string>
     <string name="go_back_btn">Go back</string>
+
+    <!-- Home Screen -->
+    <string name="home_introduction_greeting">Hello, I\'m Mohammed Malloul</string>
+    <string name="home_introduction_occupation">Software Engineer | Mobile App Developer</string>
+    <string name="home_featured_projects_title">Featured Projects</string>
+    <string name="home_contact_me_title">Contact Me</string>
+    <string name="home_contact_me_placeholder">Type your message</string>
+    <string name="home_send_message_button">Send Message</string>
+    <string name="home_project_card_title_project_1">Project 1</string>
+    <string name="home_project_card_description_project_1">Lorem ipsum dolor sit amet.</string>
+    <string name="home_project_card_title_project_2">Project 2</string>
+    <string name="home_project_card_description_project_2">Suspendisse non dui eget arcu.</string>
+
+    <!-- About Screen -->
+    <string name="about_name">Mohammed Malloul</string>
+    <string name="about_occupation">Software Engineer</string>
+    <string name="about_bio">Passionate about coding and building cool apps!</string>
+    <string name="skills_title">Skills</string>
+    <string name="social_links_title">Find me on</string>
+    <string name="icon">Icon</string>
+
+    <!-- Project List Screen -->
+    <string name="project_list_title">Project List</string>
+    <string name="project_url_btn">Project URL</string>
+    <string name="repository_url_btn">Repository URL</string>
+    <string name="project_image_description">Repository URL</string>
+
+    <!-- Project Detail Screen -->
+    <string name="project_detail_title">Project Details</string>
+    <string name="visit_project_btn">Visit Project</string>
+    <string name="view_repository_btn">View Repository</string>
+
+    <!-- Common -->
+    <string name="profile_picture_content_description">Profile Picture</string>
+    <string name="header_image_description">Header Image</string>
+    <string name="back_btn">Back</string>
+
 </resources>
