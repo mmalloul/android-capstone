@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,12 +41,12 @@ data class AboutMeInfo(
 @Composable
 fun AboutScreen() {
     val aboutMeInfo = AboutMeInfo(
-        name = "Mohammed Malloul",
-        occupation = "Software Engineer",
-        bio = "Passionate about coding and building cool apps!",
+        name = stringResource(id = R.string.about_name),
+        occupation = stringResource(id = R.string.about_occupation),
+        bio = stringResource(id = R.string.about_bio),
         profileImageRes = R.drawable.ic_launcher_foreground
     )
-    val skills = listOf("Kotlin", "Java", "Flutter", "React Native", "UI/UX Design")
+    val skills = listOf("Kotlin", "Java", "Laravel", "Svelte", "UI/UX Design")
     val socialLinks = listOf(
         SocialLink("LinkedIn", "https://linkedin.com/in/johndoe", Icons.Rounded.Email),
         SocialLink("GitHub", "https://github.com/johndoe", Icons.Rounded.Email),
@@ -115,7 +116,7 @@ fun ProfileCard(aboutMeInfo: AboutMeInfo) {
 fun ProfilePicture(profileImageRes: Int) {
     Image(
         painter = painterResource(id = profileImageRes),
-        contentDescription = "Profile Picture",
+        contentDescription = stringResource(id = R.string.profile_picture_content_description),
         modifier = Modifier
             .size(120.dp)
             .clip(CircleShape)
@@ -157,7 +158,7 @@ fun SkillsSection(skills: List<String>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Skills",
+            stringResource(id = R.string.skills_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -165,7 +166,7 @@ fun SkillsSection(skills: List<String>) {
         Spacer(modifier = Modifier.height(16.dp))
 
         FlowRow(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.Top,
             maxItemsInEachRow = 4,
             modifier = Modifier.fillMaxWidth()
@@ -208,7 +209,7 @@ fun SocialLinksSection(socialLinks: List<SocialLink>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Find me on",
+            stringResource(id = R.string.social_links_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -230,7 +231,7 @@ fun SocialLinkButton(name: String, icon: ImageVector, onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Icon(icon, contentDescription = "$name icon")
+        Icon(icon, contentDescription = "$name ${stringResource(id = R.string.icon)}")
         Spacer(Modifier.width(8.dp))
         Text(name)
     }

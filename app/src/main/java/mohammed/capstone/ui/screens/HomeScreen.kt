@@ -21,25 +21,28 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import mohammed.capstone.R
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.viewmodel.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
     val focusManager = LocalFocusManager.current
     val state = rememberPullToRefreshState { true }
 
     if (state.isRefreshing) {
         LaunchedEffect(true) {
+            viewModel.getAllProjects()
             delay(1500)
-            // TODO: Refresh state
             state.endRefresh()
         }
     }
@@ -77,7 +80,7 @@ fun HomeScreen(navController: NavHostController) {
 fun HeaderImage() {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_background),
-        contentDescription = "Header Image",
+        contentDescription = stringResource(id = R.string.header_image_description),
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
@@ -96,12 +99,12 @@ private fun IntroductionSection() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Hello, I'm Mohammed Malloul",
+            text = stringResource(id = R.string.home_introduction_greeting),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = "Software Engineer | Mobile App Developer",
+            text = stringResource(id = R.string.home_introduction_occupation),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -118,21 +121,30 @@ private fun FeaturedProjectsSection(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Featured Projects",
+            text = stringResource(id = R.string.home_featured_projects_title),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary
         )
+
         Spacer(modifier = Modifier.height(16.dp))
-        // Repeat this for each project you want to feature
+
         FeaturedProjectCard(
-            title = "Project 1",
-            description = "Lorem ipsum dolor sit amet.",
+            title = stringResource(
+                id = R.string.home_project_card_title_project_1
+            ),
+            description = stringResource(
+                id = R.string.home_project_card_description_project_1
+            ),
             navController = navController
         )
         Spacer(modifier = Modifier.height(8.dp))
         FeaturedProjectCard(
-            title = "Project 2",
-            description = "Suspendisse non dui eget arcu.",
+            title = stringResource(
+                id = R.string.home_project_card_title_project_2
+            ),
+            description = stringResource(
+                id = R.string.home_project_card_description_project_2
+            ),
             navController = navController
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -148,26 +160,34 @@ private fun ContactMeSection(focusManager: FocusManager) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Contact Me",
+            text = stringResource(id = R.string.home_contact_me_title),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(16.dp))
+
+        var message by remember { mutableStateOf("") }
+
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle text change */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 56.dp, max = 56.dp),
+            value = message,
+            onValueChange = { message = it },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text(stringResource(id = R.string.home_contact_me_placeholder)) },
             textStyle = MaterialTheme.typography.bodyLarge,
-            placeholder = { Text("Type your message") },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Send),
             keyboardActions = KeyboardActions(onSend = {
                 focusManager.clearFocus()
             }),
-            singleLine = true
+            singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                cursorColor = MaterialTheme.colorScheme.primary,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         )
+
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(
             onClick = { /* Handle send action */ },
             modifier = Modifier.fillMaxWidth(),
@@ -176,10 +196,14 @@ private fun ContactMeSection(focusManager: FocusManager) {
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Icon(imageVector = Icons.Filled.Email, contentDescription = "Send Email")
+            Icon(
+                imageVector = Icons.Filled.Email,
+                contentDescription = stringResource(id = R.string.home_send_message_button)
+            )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Send Message")
+            Text(text = stringResource(id = R.string.home_send_message_button))
         }
+
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
@@ -215,6 +239,6 @@ fun FeaturedProjectCard(title: String, description: String, navController: NavHo
 @Composable
 fun HomeScreenPreview() {
     CapstoneTheme {
-        HomeScreen(navController = rememberNavController())
+        HomeScreen(navController = rememberNavController(), viewModel())
     }
 }

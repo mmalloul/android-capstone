@@ -16,7 +16,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     }
 
     data object ProjectDetail :
-        Screen("projectDetail/{projectId}", "Project Detail", Icons.Filled.Warning) {
+        Screen("projectDetail/{projectId}", "Project Detail", Icons.Filled.Build) {
         fun createRoute(projectId: String) = "projectDetail/$projectId"
     }
 }

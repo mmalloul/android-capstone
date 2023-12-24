@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -30,6 +31,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import mohammed.capstone.config.Config
 import mohammed.capstone.ui.screens.AboutScreen
 import mohammed.capstone.ui.screens.ErrorScreen
 import mohammed.capstone.ui.screens.HomeScreen
@@ -90,11 +92,11 @@ fun GreetingPreview() {
 
 @Composable
 fun BottomNav(navController: NavHostController) {
-    val screens = listOf(Screen.Projects, Screen.Home, Screen.About)
+    val screens = Config.getNavScreens()
 
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -130,14 +132,17 @@ fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modi
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
-        composable(Screen.Home.route) { HomeScreen(navController) }
+        composable(Screen.Home.route) { HomeScreen(navController, viewModel) }
         composable(Screen.Projects.route) { ProjectListScreen(viewModel, navController) }
         composable(Screen.About.route) { AboutScreen() }
         composable(
             route = Screen.Error.route,
             arguments = listOf(navArgument("errorMessage") { type = NavType.StringType })
         ) { backStackEntry ->
-            val errorMessage = backStackEntry.arguments?.getString("errorMessage") ?: "Unknown error"
+            val errorMessage =
+                backStackEntry.arguments?.getString("errorMessage") ?: stringResource(
+                    id = R.string.unknown_error
+                )
             ErrorScreen(navController, errorMessage)
         }
         composable(
