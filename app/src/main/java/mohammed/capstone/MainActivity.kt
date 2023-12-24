@@ -90,7 +90,7 @@ fun GreetingPreview() {
 
 @Composable
 fun BottomNav(navController: NavHostController) {
-    val screens = listOf(Screen.Projects, Screen.Home, Screen.About)
+    val screens = Config.getNavScreens()
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surfaceVariant,
