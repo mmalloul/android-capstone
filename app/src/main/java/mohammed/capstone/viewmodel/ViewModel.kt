@@ -35,4 +35,10 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
             _project.value = repository.getProject(id)
         }
     }
+
+    fun setProjectNull() {
+        viewModelScope.launch {
+            _project.value = null
+        }
+    }
 }

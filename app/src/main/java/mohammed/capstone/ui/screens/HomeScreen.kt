@@ -56,13 +56,15 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
                     .nestedScroll(state.nestedScrollConnection)
             ) {
                 LazyColumn(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(16.dp)
                 ) {
                     item {
                         HeaderImage()
                         IntroductionSection()
                         if (!state.isRefreshing) {
-                            FeaturedProjectsSection(navController)
+                            FeaturedProjectsSection(navController, viewModel)
                             ContactMeSection(focusManager)
                         }
                     }
@@ -79,13 +81,14 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
 @Composable
 fun HeaderImage() {
     Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
+        painter = painterResource(id = R.drawable.company_logo_transparant),
         contentDescription = stringResource(id = R.string.header_image_description),
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .height(200.dp)
             .clip(shape = RoundedCornerShape(bottomEnd = 24.dp, bottomStart = 24.dp)),
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.Crop,
+        alignment = Alignment.Center
     )
     Spacer(modifier = Modifier.height(24.dp))
 }
@@ -94,8 +97,7 @@ fun HeaderImage() {
 private fun IntroductionSection() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -113,11 +115,10 @@ private fun IntroductionSection() {
 }
 
 @Composable
-private fun FeaturedProjectsSection(navController: NavHostController) {
+private fun FeaturedProjectsSection(navController: NavHostController, viewModel: ViewModel) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -135,7 +136,8 @@ private fun FeaturedProjectsSection(navController: NavHostController) {
             description = stringResource(
                 id = R.string.home_project_card_description_project_1
             ),
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.height(8.dp))
         FeaturedProjectCard(
@@ -145,7 +147,8 @@ private fun FeaturedProjectsSection(navController: NavHostController) {
             description = stringResource(
                 id = R.string.home_project_card_description_project_2
             ),
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.height(24.dp))
     }
@@ -155,8 +158,7 @@ private fun FeaturedProjectsSection(navController: NavHostController) {
 private fun ContactMeSection(focusManager: FocusManager) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -209,11 +211,19 @@ private fun ContactMeSection(focusManager: FocusManager) {
 }
 
 @Composable
-fun FeaturedProjectCard(title: String, description: String, navController: NavHostController) {
+fun FeaturedProjectCard(
+    title: String,
+    description: String,
+    navController: NavHostController,
+    viewModel: ViewModel
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { navController.navigate(Screen.ProjectDetail.createRoute("1")) },
+            .clickable {
+                viewModel.setProjectNull()
+                navController.navigate(Screen.ProjectDetail.createRoute("1"))
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
