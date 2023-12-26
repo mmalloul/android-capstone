@@ -8,8 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -18,7 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,13 +42,13 @@ fun AboutScreen() {
         name = stringResource(id = R.string.about_name),
         occupation = stringResource(id = R.string.about_occupation),
         bio = stringResource(id = R.string.about_bio),
-        profileImageRes = R.drawable.ic_launcher_foreground
+        profileImageRes = R.drawable.company_logo_small
     )
     val skills = listOf("Kotlin", "Java", "Laravel", "Svelte", "UI/UX Design")
     val socialLinks = listOf(
-        SocialLink("LinkedIn", "https://linkedin.com/in/johndoe", Icons.Rounded.Email),
-        SocialLink("GitHub", "https://github.com/johndoe", Icons.Rounded.Email),
-        SocialLink("Email", "mailto:johndoe@example.com", Icons.Rounded.Email)
+        SocialLink("LinkedIn", "https://linkedin.com/in/johndoe", painterResource(id = R.drawable.linkedin)),
+        SocialLink("GitHub", "https://github.com/johndoe", painterResource(id = R.drawable.github)),
+        SocialLink("Email", "mailto:johndoe@example.com", painterResource(id = R.drawable.email))
     )
     val state = rememberPullToRefreshState()
     if (state.isRefreshing) {
@@ -217,16 +215,15 @@ fun SocialLinksSection(socialLinks: List<SocialLink>) {
         socialLinks.forEach { socialLink ->
             SocialLinkButton(
                 name = socialLink.name,
-                icon = socialLink.icon,
-                onClick = { openUrl(context, socialLink.url) }
-            )
+                icon = socialLink.icon
+            ) { openUrl(context, socialLink.url) }
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
 @Composable
-fun SocialLinkButton(name: String, icon: ImageVector, onClick: () -> Unit) {
+fun SocialLinkButton(name: String, icon: Painter, onClick: () -> Unit) {
     ElevatedButton(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth()
@@ -242,7 +239,7 @@ private fun openUrl(context: Context, url: String) {
     context.startActivity(intent)
 }
 
-data class SocialLink(val name: String, val url: String, val icon: ImageVector)
+data class SocialLink(val name: String, val url: String, val icon: Painter)
 
 @Preview(showBackground = true)
 @Composable

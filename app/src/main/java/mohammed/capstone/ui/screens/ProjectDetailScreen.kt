@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -119,7 +120,7 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
     ) {
         item {
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.company_logo_transparant),
                 contentDescription = stringResource(id = R.string.project_image_description),
                 modifier = Modifier
                     .fillMaxWidth()

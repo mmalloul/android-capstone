@@ -81,6 +81,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.4.0")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0-beta03")
-
+    implementation("androidx.core:core-splashscreen:1.0.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

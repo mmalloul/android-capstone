@@ -5,7 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
@@ -19,7 +24,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -39,6 +47,7 @@ import mohammed.capstone.ui.screens.ProjectDetailScreen
 import mohammed.capstone.ui.screens.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.viewmodel.SplashViewModel
 import mohammed.capstone.viewmodel.ViewModel
 
 class MainActivity : ComponentActivity() {
@@ -48,17 +57,47 @@ class MainActivity : ComponentActivity() {
         setContent {
             val systemIsInDarkTheme = isSystemInDarkTheme()
 
+            val splashViewModel = viewModel<SplashViewModel>()
+            val showSplashScreen by splashViewModel.showSplashScreen.observeAsState(initial = true)
+
             CapstoneTheme(darkTheme = systemIsInDarkTheme) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    CapstoneApp()
+                Crossfade(
+                    targetState = showSplashScreen,
+                    label = stringResource(id = R.string.splash_screen_fade_label)
+                ) { showSplash ->
+                    if (showSplash) {
+                        SplashScreen()
+                    } else {
+                        MainAppContent()
+                    }
                 }
             }
         }
     }
 }
 
+@Composable
+fun SplashScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.company_logo_transparant),
+            contentDescription = stringResource(id = R.string.splash_screen_image_description)
+        )
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MainAppContent() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        CapstoneApp()
+    }
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

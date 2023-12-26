@@ -65,14 +65,16 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
 
             when (val projects = projectsResource.value) {
                 is Resource.Loading -> {
-                    CircularProgressIndicator()
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                    }
                 }
 
                 is Resource.Success -> {
                     LazyColumn {
                         if (!pullRefreshState.isRefreshing) {
                             items(projects.data!!) { project ->
-                                ProjectListItem(project, navController)
+                                ProjectListItem(project, navController, viewModel)
                             }
                         }
                     }
@@ -96,13 +98,14 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
 }
 
 @Composable
-fun ProjectListItem(project: Project, navController: NavHostController) {
+fun ProjectListItem(project: Project, navController: NavHostController, viewModel: ViewModel) {
     val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
+                viewModel.setProjectNull()
                 navController.navigate(Screen.ProjectDetail.createRoute(project.id))
             },
         elevation = CardDefaults.cardElevation(
@@ -111,12 +114,13 @@ fun ProjectListItem(project: Project, navController: NavHostController) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.company_logo_transparant),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(project.title, style = MaterialTheme.typography.bodyLarge)

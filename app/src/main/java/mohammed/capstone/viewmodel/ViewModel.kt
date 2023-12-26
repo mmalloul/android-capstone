@@ -10,7 +10,7 @@ import mohammed.capstone.data.api.util.Resource
 import mohammed.capstone.data.models.Project
 import mohammed.capstone.repository.Repository
 
-class ViewModel(application: Application) : AndroidViewModel(application) {
+open class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = Repository()
 
     private val _listOfProjects: MutableLiveData<Resource<List<Project>>> = MutableLiveData()
@@ -33,6 +33,12 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _project.value = Resource.Loading()
             _project.value = repository.getProject(id)
+        }
+    }
+
+    fun setProjectNull() {
+        viewModelScope.launch {
+            _project.value = null
         }
     }
 }
