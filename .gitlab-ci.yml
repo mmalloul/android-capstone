@@ -73,6 +73,7 @@ lintBackend:
     - docker:20.10.16-dind
   script:
     - echo "Linting backend code..."
+    - cd backend
     - docker build --target=lint -t ${BACKEND_IMAGE_NAME}-lint .
     - echo "No lint issues found in backend."
   only:

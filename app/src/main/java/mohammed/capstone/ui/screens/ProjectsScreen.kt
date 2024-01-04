@@ -31,6 +31,7 @@ import mohammed.capstone.R
 import mohammed.capstone.data.api.util.Resource
 import mohammed.capstone.data.models.Project
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.utils.Utils
 import mohammed.capstone.viewmodel.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -136,8 +137,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
                 TextButton(onClick = {
                     val url = project.url
                     if (url.isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        context.startActivity(intent)
+                        Utils.openCustomTab(context, url)
                     }
                 }) {
                     Text(stringResource(id = R.string.project_url_btn))
@@ -146,8 +146,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
                 TextButton(onClick = {
                     val repoUrl = project.repositoryUrl
                     if (repoUrl.isNotEmpty()) {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(repoUrl))
-                        context.startActivity(intent)
+                        Utils.openCustomTab(context, repoUrl)
                     }
                 }) {
                     Text(stringResource(id = R.string.repository_url_btn))

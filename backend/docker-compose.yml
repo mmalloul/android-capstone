@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  app:
+    image: mohmlll/capstone:latest
+    build: .
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=host.docker.internal
+      - DB_USER=root
+      - DB_PASSWORD=
+      - DB_NAME=portfolio
+      - DB_DIALECT=mysql
+      - APP_URL="http://localhost:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

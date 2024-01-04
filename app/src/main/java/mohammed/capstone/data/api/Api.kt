@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class Api {
     companion object {
-        private val BASE_URL = "http://10.0.2.2:3000"
+        private val BASE_URL = "http://128.140.63.4:3000"
         val apiClient by lazy { createApi() }
 
         private fun createApi(): ApiService {
