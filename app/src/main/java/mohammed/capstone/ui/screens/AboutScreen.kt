@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import mohammed.capstone.utils.Utils
 import kotlinx.coroutines.delay
 import mohammed.capstone.R
 import mohammed.capstone.ui.theme.CapstoneTheme
@@ -46,9 +47,9 @@ fun AboutScreen() {
     )
     val skills = listOf("Kotlin", "Java", "Laravel", "Svelte", "UI/UX Design")
     val socialLinks = listOf(
-        SocialLink("LinkedIn", "https://linkedin.com/in/johndoe", painterResource(id = R.drawable.linkedin)),
-        SocialLink("GitHub", "https://github.com/johndoe", painterResource(id = R.drawable.github)),
-        SocialLink("Email", "mailto:johndoe@example.com", painterResource(id = R.drawable.email))
+        SocialLink("LinkedIn", "https://www.linkedin.com/in/mohammedmalloul", painterResource(id = R.drawable.linkedin)),
+        SocialLink("GitHub", "https://github.com/Mohmlll", painterResource(id = R.drawable.github)),
+        SocialLink("Email", "mailto:mohammed.malloul@hotmail.com", painterResource(id = R.drawable.email))
     )
     val state = rememberPullToRefreshState()
     if (state.isRefreshing) {
@@ -216,7 +217,7 @@ fun SocialLinksSection(socialLinks: List<SocialLink>) {
             SocialLinkButton(
                 name = socialLink.name,
                 icon = socialLink.icon
-            ) { openUrl(context, socialLink.url) }
+            ) { Utils.openCustomTab(context, socialLink.url) }
             Spacer(modifier = Modifier.height(8.dp))
         }
     }

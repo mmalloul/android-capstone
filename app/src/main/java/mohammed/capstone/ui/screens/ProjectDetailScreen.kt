@@ -32,6 +32,7 @@ import mohammed.capstone.R
 import mohammed.capstone.data.api.util.Resource
 import mohammed.capstone.data.models.Project
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.utils.Utils
 import mohammed.capstone.viewmodel.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -139,7 +140,7 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { openUrl(context, projectData.url) },
+                onClick = { Utils.openCustomTab(context, projectData.url) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
@@ -150,7 +151,7 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
-                onClick = { openUrl(context, projectData.repositoryUrl) },
+                onClick = { Utils.openCustomTab(context, projectData.repositoryUrl) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)
             ) {
@@ -160,13 +161,6 @@ fun ProjectDetailContent(paddingValues: PaddingValues, projectData: Project, con
                 )
             }
         }
-    }
-}
-
-private fun openUrl(context: Context, url: String) {
-    if (url.isNotEmpty()) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        context.startActivity(intent)
     }
 }
 
