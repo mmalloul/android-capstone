@@ -38,7 +38,7 @@ RUN npm install --omit=dev
 # Tests
 FROM base as lint
 
-COPY --from=build /opt/app .
+COPY --from=ts-compile /opt/app .
 
 RUN npm run lint
 
