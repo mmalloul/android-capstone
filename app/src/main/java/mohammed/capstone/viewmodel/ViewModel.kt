@@ -36,9 +36,7 @@ open class ViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setProjectNull() {
-        viewModelScope.launch {
-            _project.value = null
-        }
+    fun resetProject() {
+        _project.value = Resource.Empty()
     }
 }
