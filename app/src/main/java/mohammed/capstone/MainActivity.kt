@@ -38,7 +38,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import mohammed.capstone.config.Config
+import mohammed.capstone.config.ScreenConfig
 import mohammed.capstone.ui.screens.about.AboutScreen
 import mohammed.capstone.ui.screens.error.ErrorScreen
 import mohammed.capstone.ui.screens.home.HomeScreen
@@ -130,7 +130,7 @@ fun GreetingPreview() {
 
 @Composable
 fun BottomNav(navController: NavHostController) {
-    val screens = Config.getNavScreens()
+    val screens = ScreenConfig.getNavScreens()
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
