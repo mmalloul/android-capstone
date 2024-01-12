@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!-- Domain configuration block -->
     <domain-config cleartextTrafficPermitted="true">
+        <!-- Allow clear text (non-HTTPS) traffic for the specified domain -->
         <domain includeSubdomains="true">10.0.2.2</domain>
+        <!-- This is often used for local development, as 10.0.2.2 is an alias to the host loopback interface (127.0.0.1 on the host) in the Android emulator -->
+
+        <!-- Allow clear text traffic for another specific domain -->
         <domain includeSubdomains="true">128.140.63.4</domain>
+        <!-- This could be your server's IP where your app might be fetching or sending data -->
     </domain-config>
 </network-security-config>

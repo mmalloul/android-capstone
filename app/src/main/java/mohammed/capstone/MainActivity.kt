@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,28 +38,38 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import mohammed.capstone.config.Config
-import mohammed.capstone.ui.screens.AboutScreen
-import mohammed.capstone.ui.screens.ErrorScreen
-import mohammed.capstone.ui.screens.HomeScreen
-import mohammed.capstone.ui.screens.ProjectDetailScreen
-import mohammed.capstone.ui.screens.ProjectListScreen
+import mohammed.capstone.config.ScreenConfig
+import mohammed.capstone.ui.screens.about.AboutScreen
+import mohammed.capstone.ui.screens.error.ErrorScreen
+import mohammed.capstone.ui.screens.home.HomeScreen
+import mohammed.capstone.ui.screens.projectDetail.ProjectDetailScreen
+import mohammed.capstone.ui.screens.projectList.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.ui.theme.CapstoneTheme
 import mohammed.capstone.viewmodel.SplashViewModel
 import mohammed.capstone.viewmodel.ViewModel
 
+/**
+ * The main activity of the Capstone application.
+ * Sets up the composable content and handles theme and navigation.
+ */
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            // Determine if the system is in dark theme.
             val systemIsInDarkTheme = isSystemInDarkTheme()
 
+            // ViewModel for managing splash screen state.
             val splashViewModel = viewModel<SplashViewModel>()
+
+            // Observing the state to show or hide the splash screen.
             val showSplashScreen by splashViewModel.showSplashScreen.observeAsState(initial = true)
 
+            // Setting up the theme for the app.
             CapstoneTheme(darkTheme = systemIsInDarkTheme) {
+                // Crossfade animation between splash screen and main app content.
                 Crossfade(
                     targetState = showSplashScreen,
                     label = stringResource(id = R.string.splash_screen_fade_label)
@@ -76,6 +85,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function for displaying the splash screen.
+ */
 @Composable
 fun SplashScreen() {
     Box(
@@ -91,6 +103,10 @@ fun SplashScreen() {
     }
 }
 
+/**
+ * Composable function to set up the main content of the application.
+ * Includes navigation setup and the main scaffold.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainAppContent() {
@@ -99,6 +115,10 @@ fun MainAppContent() {
     }
 }
 
+/**
+ * Main composable function for the Capstone application.
+ * Sets up the navigation host and bottom navigation bar.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CapstoneApp() {
@@ -120,6 +140,9 @@ fun CapstoneApp() {
     }
 }
 
+/**
+ * Preview of the main Capstone app composable function.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
@@ -129,9 +152,14 @@ fun GreetingPreview() {
     }
 }
 
+/**
+ * Composable function to set up the bottom navigation bar.
+ *
+ * @param navController NavHostController for handling navigation actions.
+ */
 @Composable
 fun BottomNav(navController: NavHostController) {
-    val screens = Config.getNavScreens()
+    val screens = ScreenConfig.getNavScreens()
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -163,17 +191,27 @@ fun BottomNav(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable function to set up the navigation host for the Capstone application.
+ * Defines the navigation graph for the app.
+ *
+ * @param viewModel ViewModel for managing data.
+ * @param navController NavController for handling navigation actions.
+ * @param modifier Modifier for customizing the UI element's layout.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modifier: Modifier) {
+    // Setting up the navigation host with the navigation graph.
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
+        // Defining composable functions for each navigation route.
         composable(Screen.Home.route) { HomeScreen(navController, viewModel) }
         composable(Screen.Projects.route) { ProjectListScreen(viewModel, navController) }
-        composable(Screen.About.route) { AboutScreen() }
+        composable(Screen.About.route) { AboutScreen(navController) }
         composable(
             route = Screen.Error.route,
             arguments = listOf(navArgument("errorMessage") { type = NavType.StringType })
