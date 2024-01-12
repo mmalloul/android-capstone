@@ -1,4 +1,4 @@
-package mohammed.capstone.ui.screens
+package mohammed.capstone.ui.screens.error
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mohammed.capstone.ui.theme.CapstoneTheme
 import mohammed.capstone.R
+import mohammed.capstone.ui.screens.Screen
 
 @Composable
 fun ErrorScreen(
@@ -71,6 +72,9 @@ fun ErrorScreen(
 @Composable
 fun ErrorScreenPreview() {
     CapstoneTheme(darkTheme = true) {
-        ErrorScreen(navController = rememberNavController(), errorMessage = stringResource(id = R.string.unknown_error))
+        ErrorScreen(
+            navController = rememberNavController(),
+            errorMessage = stringResource(id = R.string.unknown_error)
+        )
     }
 }
