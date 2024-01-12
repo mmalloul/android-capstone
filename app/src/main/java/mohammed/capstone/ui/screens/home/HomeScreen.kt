@@ -31,6 +31,14 @@ import mohammed.capstone.ui.theme.CapstoneTheme
 import mohammed.capstone.utils.Utils
 import mohammed.capstone.viewmodel.ViewModel
 
+/**
+ * Composable function to display the home screen of the application.
+ * This screen includes a header image, an introduction section,
+ * a section for featured projects, and a contact me section.
+ *
+ * @param navController Navigation controller for handling navigation events.
+ * @param viewModel ViewModel associated with this screen for managing data.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
@@ -38,6 +46,7 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
     val state = rememberPullToRefreshState { true }
     val projectsResource = viewModel.getAllProjectsResource.observeAsState()
 
+    // Handle the pull to refresh logic.
     if (state.isRefreshing) {
         LaunchedEffect(true) {
             viewModel.getAllProjects()
@@ -46,9 +55,11 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
         }
     }
 
+    // Main layout of the home screen.
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         content = { innerPadding ->
+            // Box layout allowing nested scroll for pull-to-refresh.
             Box(
                 Modifier
                     .fillMaxSize()
@@ -57,18 +68,21 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(innerPadding)
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     item {
                         HeaderImage()
-                        Spacer(modifier = Modifier.height(24.dp))
                         IntroductionSection()
-                        Spacer(modifier = Modifier.height(24.dp))
-                        if (!state.isRefreshing) {
+                    }
+
+                    if (!state.isRefreshing) {
+                        item {
                             FeaturedProjectsSection(projectsResource, navController, viewModel)
-                            Spacer(modifier = Modifier.height(24.dp))
+                        }
+
+                        item {
                             ContactMeSection(focusManager)
-                            Spacer(modifier = Modifier.height(24.dp))
                         }
                     }
                 }
@@ -81,6 +95,9 @@ fun HomeScreen(navController: NavHostController, viewModel: ViewModel) {
     )
 }
 
+/**
+ * Composable function to display a header image on the home screen.
+ */
 @Composable
 fun HeaderImage() {
     Image(
@@ -96,7 +113,11 @@ fun HeaderImage() {
 }
 
 
-@Preview(showBackground = true)
+/**
+ * Preview of the HomeScreen composable function.
+ * This preview is used for development purposes in Android Studio.
+ */
+@Preview
 @Composable
 fun HomeScreenPreview() {
     CapstoneTheme {

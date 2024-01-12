@@ -29,6 +29,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import mohammed.capstone.R
 
+/**
+ * Composable function to display a 'Contact Me' section on the home screen.
+ * This section includes a text field for message input and a send button.
+ *
+ * @param focusManager FocusManager to handle focus events on the text field.
+ */
 @Composable
 fun ContactMeSection(focusManager: FocusManager) {
     Column(
@@ -43,6 +49,7 @@ fun ContactMeSection(focusManager: FocusManager) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
+        // State variable to hold the input message.
         var message by remember { mutableStateOf("") }
 
         OutlinedTextField(

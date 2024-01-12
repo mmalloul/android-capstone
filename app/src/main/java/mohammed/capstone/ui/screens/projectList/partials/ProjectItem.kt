@@ -30,8 +30,17 @@ import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.utils.Utils
 import mohammed.capstone.viewmodel.ViewModel
 
+/**
+ * Composable function to display an individual project item in the project list.
+ * Each item is represented as a card with an image, title, description, and buttons for external links.
+ *
+ * @param project The project data to be displayed.
+ * @param navController NavController for handling navigation to the project detail screen.
+ * @param viewModel ViewModel for managing project-related data.
+ */
 @Composable
 fun ProjectListItem(project: Project, navController: NavHostController, viewModel: ViewModel) {
+    // Context from the local environment, used for handling link actions.
     val context = LocalContext.current
 
     Card(
@@ -39,6 +48,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
             .fillMaxWidth()
             .clickable {
                 viewModel.resetProject()
+                // Navigating to the project detail screen on click.
                 navController.navigate(Screen.ProjectDetail.createRoute(project.id))
             },
         elevation = CardDefaults.cardElevation(
@@ -46,6 +56,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
         ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
+            // Image representing the project.
             Image(
                 painter = painterResource(id = R.drawable.company_logo_transparant),
                 contentDescription = null,
@@ -56,8 +67,12 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
                     .padding(16.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
+
+            // Text displaying the project title.
             Text(project.title, style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.height(8.dp))
+
+            // Text displaying the project description.
             Text(
                 text = project.description,
                 style = MaterialTheme.typography.bodyMedium,
@@ -65,11 +80,13 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(8.dp))
+
+            // Row layout for the buttons to visit the project URL and view the repository.
             Row {
                 TextButton(onClick = {
                     val url = project.url
                     if (url.isNotEmpty()) {
-                        Utils.openCustomTab(context, url)
+                        Utils.openCustomTab(navController, context, url)
                     }
                 }) {
                     Text(stringResource(id = R.string.project_url_btn))
@@ -78,7 +95,7 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
                 TextButton(onClick = {
                     val repoUrl = project.repositoryUrl
                     if (repoUrl.isNotEmpty()) {
-                        Utils.openCustomTab(context, repoUrl)
+                        Utils.openCustomTab(navController, context, repoUrl)
                     }
                 }) {
                     Text(stringResource(id = R.string.repository_url_btn))
@@ -86,5 +103,4 @@ fun ProjectListItem(project: Project, navController: NavHostController, viewMode
             }
         }
     }
-    Spacer(modifier = Modifier.height(16.dp))
 }

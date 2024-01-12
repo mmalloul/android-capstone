@@ -11,6 +11,10 @@ import androidx.compose.ui.res.stringResource
 
 import mohammed.capstone.R
 
+/**
+ * Composable function to display the introduction section on the home screen.
+ * This section includes a greeting and a brief mention of the occupation.
+ */
 @Composable
 fun IntroductionSection() {
     Column(

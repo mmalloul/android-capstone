@@ -24,6 +24,12 @@ import androidx.compose.ui.unit.dp
 import mohammed.capstone.R
 import mohammed.capstone.data.models.AboutMeInfo
 
+/**
+ * Composable function to display a profile card with user information.
+ * This includes a profile picture, name, occupation, and a short bio.
+ *
+ * @param aboutMeInfo Data model containing the information to be displayed.
+ */
 @Composable
 fun ProfileCard(aboutMeInfo: AboutMeInfo) {
     Card(
@@ -33,6 +39,7 @@ fun ProfileCard(aboutMeInfo: AboutMeInfo) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
+
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
@@ -47,6 +54,11 @@ fun ProfileCard(aboutMeInfo: AboutMeInfo) {
     }
 }
 
+/**
+ * Composable function to display the profile picture.
+ *
+ * @param profileImageRes Resource ID for the profile image.
+ */
 @Composable
 fun ProfilePicture(profileImageRes: Int) {
     Image(
@@ -59,6 +71,12 @@ fun ProfilePicture(profileImageRes: Int) {
     )
 }
 
+/**
+ * Composable function to display the user's name and occupation.
+ *
+ * @param name The user's name.
+ * @param occupation The user's occupation.
+ */
 @Composable
 fun NameAndOccupation(name: String, occupation: String) {
     Text(
@@ -73,6 +91,11 @@ fun NameAndOccupation(name: String, occupation: String) {
     )
 }
 
+/**
+ * Composable function to display a short bio of the user.
+ *
+ * @param bio The user's bio.
+ */
 @Composable
 fun Bio(bio: String) {
     Text(

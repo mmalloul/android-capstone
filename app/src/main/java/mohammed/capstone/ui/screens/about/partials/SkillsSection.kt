@@ -18,6 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import mohammed.capstone.R
 
+/**
+ * Composable function to display a section showcasing a list of skills.
+ * It uses a FlowRow layout to dynamically arrange skill chips.
+ *
+ * @param skills A list of strings representing various skills.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SkillsSection(skills: List<String>) {
@@ -35,6 +41,7 @@ fun SkillsSection(skills: List<String>) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // FlowRow layout to dynamically arrange skill chips.
         FlowRow(
             horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.Top,
@@ -42,12 +49,19 @@ fun SkillsSection(skills: List<String>) {
             modifier = Modifier.fillMaxWidth()
         ) {
             skills.forEach { skill ->
+                // Display each skill in a separate chip.
                 SkillChip(skill)
             }
         }
     }
 }
 
+/**
+ * Composable function to display a single skill chip.
+ * Currently, the chips are static but can be linked to relevant projects or information.
+ *
+ * @param skill The skill to be displayed in the chip.
+ */
 @Composable
 fun SkillChip(skill: String) {
     Chip(
@@ -59,7 +73,13 @@ fun SkillChip(skill: String) {
     )
 }
 
-
+/**
+ * Generic composable function to create a chip with a label and an onClick action.
+ *
+ * @param label Composable lambda to provide the content inside the chip.
+ * @param onClick Lambda function to handle click actions on the chip.
+ * @param modifier Modifier for customizing the UI
+ */
 @Composable
 fun Chip(
     label: @Composable () -> Unit,
