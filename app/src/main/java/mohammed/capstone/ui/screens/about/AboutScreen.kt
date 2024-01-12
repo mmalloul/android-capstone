@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mohammed.capstone.R
 import mohammed.capstone.data.models.AboutMeInfo
@@ -32,7 +32,7 @@ import mohammed.capstone.ui.theme.CapstoneTheme
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(navController: NavController) {
+fun AboutScreen(navController: NavHostController) {
     // Initialize dummy data for the 'About Me' section.
     // This includes name, occupation, a short bio, and a profile image.
     val aboutMeInfo = AboutMeInfo(

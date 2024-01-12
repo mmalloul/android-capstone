@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import mohammed.capstone.R
@@ -35,12 +35,12 @@ import mohammed.capstone.viewmodel.ViewModel
  * This screen shows detailed information about a specific project.
  *
  * @param viewModel ViewModel for managing project-related data.
- * @param navController NavController for navigation actions.
+ * @param navController NavHostController for navigation actions.
  * @param projectId The ID of the project to display.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, projectId: String) {
+fun ProjectDetailScreen(viewModel: ViewModel, navController: NavHostController, projectId: String) {
     // State for pull-to-refresh functionality.
     val state = rememberPullToRefreshState { true }
     // Observing the project resource state.
@@ -74,7 +74,7 @@ fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, proj
  * Handles different states of the project resource (loading, success, error).
  *
  * @param projectResource State holder for project data wrapped in a Resource.
- * @param navController NavController for navigation actions.
+ * @param navController NavHostController for navigation actions.
  * @param viewModel ViewModel for managing project-related data.
  * @param state PullToRefreshState for the pull-to-refresh functionality.
  * @param paddingValues PaddingValues for layout padding.
@@ -85,7 +85,7 @@ fun ProjectDetailScreen(viewModel: ViewModel, navController: NavController, proj
 @Composable
 fun ScreenContent(
     projectResource: State<Resource<Project>?>,
-    navController: NavController,
+    navController: NavHostController,
     viewModel: ViewModel,
     state: PullToRefreshState,
     paddingValues: PaddingValues,
@@ -130,7 +130,7 @@ fun ScreenContent(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProjectDetailTopBar(navController: NavController) {
+fun ProjectDetailTopBar(navController: NavHostController) {
     TopAppBar(
         title = { Text(stringResource(id = R.string.project_detail_title)) },
         navigationIcon = {

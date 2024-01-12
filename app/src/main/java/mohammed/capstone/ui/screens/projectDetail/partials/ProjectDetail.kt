@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import mohammed.capstone.R
 import mohammed.capstone.data.models.Project
 import mohammed.capstone.utils.Utils
@@ -37,7 +37,7 @@ import mohammed.capstone.utils.Utils
 fun ProjectDetail(
     projectData: Project,
     context: Context,
-    navController: NavController
+    navController: NavHostController
 ) {
     // LazyColumn to display project details in a scrollable column.
     LazyColumn(
@@ -104,7 +104,7 @@ fun ProjectContent(projectData: Project) {
  * @param navController Navigation controller for handling navigation events.
  */
 @Composable
-fun UrlButtons(projectData: Project, context: Context, navController: NavController) {
+fun UrlButtons(projectData: Project, context: Context, navController: NavHostController) {
     Button(
         onClick = { Utils.openCustomTab(navController, context, projectData.url) },
         modifier = Modifier.fillMaxWidth(),

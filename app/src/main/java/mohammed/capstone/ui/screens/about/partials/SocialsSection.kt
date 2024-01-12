@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import mohammed.capstone.data.models.SocialLink
 import mohammed.capstone.R
 import mohammed.capstone.utils.Utils
@@ -29,7 +29,7 @@ import mohammed.capstone.utils.Utils
  * @param socialLinks A list of SocialLink objects containing information about each social link.
  */
 @Composable
-fun SocialLinksSection(navController: NavController, socialLinks: List<SocialLink>) {
+fun SocialLinksSection(navController: NavHostController, socialLinks: List<SocialLink>) {
     // Context from the local environment, used for handling link actions.
     val context = LocalContext.current
 

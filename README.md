@@ -17,7 +17,7 @@ Capstone is a mobile application designed to showcase a portfolio of projects. I
     - Retrofit for network calls
     - LiveData for managing UI data
 - **Security Configurations**: Custom `network-security-config` for development purposes, allowing clear text traffic for specific domains.
-- **Navigation**: Utilizes `NavController` for managing app navigation.
+- **Navigation**: Utilizes `NavHostController` for managing app navigation.
 
 ## Installation
 To set up the Capstone project for development:

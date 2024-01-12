@@ -35,7 +35,7 @@ import mohammed.capstone.viewmodel.ViewModel
  * Each item is represented as a card with an image, title, description, and buttons for external links.
  *
  * @param project The project data to be displayed.
- * @param navController NavController for handling navigation to the project detail screen.
+ * @param navController NavHostController for handling navigation to the project detail screen.
  * @param viewModel ViewModel for managing project-related data.
  */
 @Composable

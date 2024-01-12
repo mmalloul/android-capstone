@@ -31,7 +31,7 @@ import mohammed.capstone.viewmodel.ViewModel
  * This screen lists all projects and allows users to refresh the list.
  *
  * @param viewModel ViewModel associated with this screen for managing project data.
- * @param navController NavController for handling navigation events.
+ * @param navController NavHostController for handling navigation events.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +98,7 @@ fun ProjectListScreen(viewModel: ViewModel, navController: NavHostController) {
  * Composable function to display the content of the project list screen.
  * Lists each project as an item in a LazyColumn.
  *
- * @param navController NavController for handling navigation events.
+ * @param navController NavHostController for handling navigation events.
  * @param viewModel ViewModel for managing project-related data.
  * @param projects List of projects to be displayed.
  */

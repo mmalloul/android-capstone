@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.net.toUri
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import mohammed.capstone.ui.screens.Screen
 
 /**
@@ -27,7 +27,7 @@ object Utils {
      * @param context The context used to start the custom tab activity.
      * @param url The URL to be opened in the custom tab.
      */
-    fun openCustomTab(navController: NavController, context: Context, url: String) {
+    fun openCustomTab(navController: NavHostController, context: Context, url: String) {
         try {
             // Building and launching a custom tab intent.
             val customTabsIntent = CustomTabsIntent.Builder().build()

@@ -155,7 +155,7 @@ fun GreetingPreview() {
 /**
  * Composable function to set up the bottom navigation bar.
  *
- * @param navController NavController for handling navigation actions.
+ * @param navController NavHostController for handling navigation actions.
  */
 @Composable
 fun BottomNav(navController: NavHostController) {
