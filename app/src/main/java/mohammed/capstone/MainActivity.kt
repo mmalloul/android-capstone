@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,11 +39,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import mohammed.capstone.config.Config
-import mohammed.capstone.ui.screens.AboutScreen
-import mohammed.capstone.ui.screens.ErrorScreen
-import mohammed.capstone.ui.screens.HomeScreen
-import mohammed.capstone.ui.screens.ProjectDetailScreen
-import mohammed.capstone.ui.screens.ProjectListScreen
+import mohammed.capstone.ui.screens.about.AboutScreen
+import mohammed.capstone.ui.screens.error.ErrorScreen
+import mohammed.capstone.ui.screens.home.HomeScreen
+import mohammed.capstone.ui.screens.projectDetail.ProjectDetailScreen
+import mohammed.capstone.ui.screens.projectList.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
 import mohammed.capstone.ui.theme.CapstoneTheme
 import mohammed.capstone.viewmodel.SplashViewModel
