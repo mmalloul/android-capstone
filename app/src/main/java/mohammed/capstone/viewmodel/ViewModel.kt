@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import mohammed.capstone.data.api.util.Resource
 import mohammed.capstone.data.models.Project
-import mohammed.capstone.repository.Repository
+import mohammed.capstone.repository.APIRepository
 
 /**
  * ViewModel class for managing UI-related data and handling business logic.
@@ -17,7 +17,7 @@ import mohammed.capstone.repository.Repository
  * @param application The application context passed to the AndroidViewModel.
  */
 open class ViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = Repository()
+    private val APIRepository = APIRepository()
 
     // MutableLiveData to handle the list of projects.
     private val _listOfProjects: MutableLiveData<Resource<List<Project>>> = MutableLiveData()
@@ -44,7 +44,7 @@ open class ViewModel(application: Application) : AndroidViewModel(application) {
             // Indicate loading state.
             _listOfProjects.value = Resource.Loading()
             // Fetch all projects from the repository.
-            _listOfProjects.value = repository.getAllProject()
+            _listOfProjects.value = APIRepository.getAllProject()
         }
     }
 
@@ -59,7 +59,7 @@ open class ViewModel(application: Application) : AndroidViewModel(application) {
             // Indicate loading state.
             _project.value = Resource.Loading()
             // Fetch the project from the repository.
-            _project.value = repository.getProject(id)
+            _project.value = APIRepository.getProject(id)
         }
     }
 

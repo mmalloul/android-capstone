@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -84,4 +85,12 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0-rc01")
     implementation("androidx.core:core-splashscreen:1.0.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Room
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    //noinspection KaptUsageInsteadOfKsp
+    kapt("androidx.room:room-compiler:$room_version")
 }

@@ -11,7 +11,7 @@ import mohammed.capstone.data.models.Project
  * Repository class for handling data operations, particularly network calls using the ApiService.
  * Provides methods to fetch all projects and a single project by its ID.
  */
-class Repository {
+class APIRepository {
     companion object {
         // Constant defining the network timeout duration.
         private const val TIMEOUT_DURATION = 5_000L

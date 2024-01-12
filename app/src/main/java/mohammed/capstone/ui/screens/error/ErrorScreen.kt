@@ -82,7 +82,7 @@ fun ErrorScreen(
 @Preview
 @Composable
 fun ErrorScreenPreview() {
-    CapstoneTheme(darkTheme = true) {
+    CapstoneTheme {
         ErrorScreen(
             navController = rememberNavController(),
             errorMessage = stringResource(id = R.string.unknown_error)

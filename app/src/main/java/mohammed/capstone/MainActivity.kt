@@ -2,13 +2,12 @@ package mohammed.capstone
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,13 +38,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import mohammed.capstone.config.ScreenConfig
+import mohammed.capstone.data.enums.ThemeOption
 import mohammed.capstone.ui.screens.about.AboutScreen
 import mohammed.capstone.ui.screens.error.ErrorScreen
 import mohammed.capstone.ui.screens.home.HomeScreen
 import mohammed.capstone.ui.screens.projectDetail.ProjectDetailScreen
 import mohammed.capstone.ui.screens.projectList.ProjectListScreen
 import mohammed.capstone.ui.screens.Screen
+import mohammed.capstone.ui.screens.setup.ThemeSelectionScreen
 import mohammed.capstone.ui.theme.CapstoneTheme
+import mohammed.capstone.viewmodel.AppSettingsViewModel
 import mohammed.capstone.viewmodel.SplashViewModel
 import mohammed.capstone.viewmodel.ViewModel
 
@@ -57,27 +59,31 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            // Determine if the system is in dark theme.
-            val systemIsInDarkTheme = isSystemInDarkTheme()
-
-            // ViewModel for managing splash screen state.
             val splashViewModel = viewModel<SplashViewModel>()
-
-            // Observing the state to show or hide the splash screen.
             val showSplashScreen by splashViewModel.showSplashScreen.observeAsState(initial = true)
 
-            // Setting up the theme for the app.
-            CapstoneTheme(darkTheme = systemIsInDarkTheme) {
-                // Crossfade animation between splash screen and main app content.
-                Crossfade(
-                    targetState = showSplashScreen,
-                    label = stringResource(id = R.string.splash_screen_fade_label)
-                ) { showSplash ->
-                    if (showSplash) {
-                        SplashScreen()
+            val appSettingsViewModel = viewModel<AppSettingsViewModel>()
+            val appSettings by appSettingsViewModel.appSettings.observeAsState()
+            val themePreference = appSettingsViewModel.themePreference
+
+            if (showSplashScreen) {
+                SplashScreen()
+            } else {
+                appSettings?.let { settings ->
+                    Log.d("MainActivity", "Observed appSettings change: $settings")
+                    if (settings.isFirstLaunch) {
+                        CapstoneTheme(ThemeOption.SYSTEM){
+                            ThemeSelectionScreen(
+                                onThemeSelected = appSettingsViewModel::saveThemePreference,
+                                appSettingsViewModel = appSettingsViewModel
+                            )
+                        }
                     } else {
-                        MainAppContent()
+                        CapstoneTheme(themeOption = themePreference) {
+                            MainAppContent()
+                        }
                     }
                 }
             }
@@ -201,7 +207,11 @@ fun BottomNav(navController: NavHostController) {
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CapstoneNavHost(viewModel: ViewModel, navController: NavHostController, modifier: Modifier) {
+fun CapstoneNavHost(
+    viewModel: ViewModel,
+    navController: NavHostController,
+    modifier: Modifier
+) {
     // Setting up the navigation host with the navigation graph.
     NavHost(
         navController = navController,
