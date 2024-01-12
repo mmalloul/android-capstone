@@ -6,11 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mohammed.capstone.data.enums.ThemeOption
 import mohammed.capstone.viewmodel.AppSettingsViewModel
-
+import mohammed.capstone.R
 @Composable
 fun ThemeSelectionScreen(
     onThemeSelected: (ThemeOption) -> Unit,
@@ -23,7 +24,7 @@ fun ThemeSelectionScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Choose Your Theme", fontSize = 24.sp, modifier = Modifier.padding(bottom = 32.dp))
+        Text(stringResource(id = R.string.theme_selection_title), fontSize = 24.sp, modifier = Modifier.padding(bottom = 32.dp))
 
         Button(
             onClick = {
@@ -34,7 +35,7 @@ fun ThemeSelectionScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text("Light Mode")
+            Text(stringResource(id = R.string.theme_light_mode))
         }
 
         Button(
@@ -46,7 +47,7 @@ fun ThemeSelectionScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text("Dark Mode")
+            Text(stringResource(id = R.string.theme_dark_mode))
         }
 
         Button(
@@ -58,7 +59,7 @@ fun ThemeSelectionScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text("System Default")
+            Text(stringResource(id = R.string.theme_system_default))
         }
     }
 }

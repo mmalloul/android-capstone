@@ -39,4 +39,10 @@
     <string name="header_image_description">Header Image</string>
     <string name="back_btn">Back</string>
     <string name="splash_screen_image_description">Splash Screen Image</string>
+
+    <!-- Theme Selection Screen -->
+    <string name="theme_selection_title">Choose Your Theme</string>
+    <string name="theme_light_mode">Light Mode</string>
+    <string name="theme_dark_mode">Dark Mode</string>
+    <string name="theme_system_default">System Default</string>
 </resources>
